@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+message PlayerData {
+  string player = 1;
+  int32 coin = 2;
+  repeated int32 skin = 3;
+  repeated int32 trail = 4;
+  int32 energy = 5;
+  int32 max_unLock_wave = 6;
+  int32 cur_skin = 7;
+  int32 cur_trail = 8;
+}
+
+enum GoodsType{
+    Skin = 0;
+    Trail = 1;
+    Energy = 3;
+}
+
+service FCService {
+  rpc Login(LoginRequest) returns (LoginResponse);
+  rpc StartBattle(NormalRequest) returns (StartBattleResponse);
+  rpc Endbattle(EndbattleRequest) returns (EndbattleResponse);
+  rpc ShopPurchase(ShopPurchaseRequest) returns (ShopPurchaseResponse);
+}
+
+message LoginRequest {
+    string name = 1;
+    string pwd = 2;
+}
+message LoginResponse {
+    string token = 1;
+    PlayerData playerData = 2;
+}
+
+message NormalRequest {
+    string token = 1;
+}
+message StartBattleResponse {
+    bool canStart = 1;
+}
+
+message EndbattleRequest{
+    string token = 1;
+    int32 level = 2;
+    int32 getCoins = 3;
+}
+message EndbattleResponse{
+    bool sucess = 1;
+}
+
+message ShopPurchaseRequest{
+    GoodsType goodsType = 1;
+    int32 goodsId = 2;
+}
+message ShopPurchaseResponse{
+    bool sucess = 1;
+}
